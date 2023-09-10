@@ -60,9 +60,26 @@ startQuiz.addEventListener("click", function () {
             // Stop the timer when it reaches 0
             clearInterval(timerInterval);
             timerDisplay.textContent = "00:00";
-            // Add code here to handle quiz completion when time is up
-            // For example, display a message or navigate to another page.
             alert("Time's up!");
+        
+            var userInitials = document.getElementById("initials").ariaValueMax;
+            var userScore = secondsLeft;
+
+            var userData = {
+                initials: userInitials,
+                score: userScore
+            };
+
+            var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+            highScores.push(userData);
+            highScores.sort(function (a,b) {
+                return b.score - a.score;
+            });
+
+            highScores = highScores.slice(0, 10);
+
+            localStorage.setItem("highScores", JSON.stringify(highScores));
+
         } else {
             // Update the timer display
             updateTimerDisplay();
@@ -115,3 +132,9 @@ function displayQuestion() {
         answerButtons[i].textContent = currentQuestion.answers[i];
     }
 }
+
+// Allow user to navigate to high score page
+var viewHighscoresButton = document.querySelector(".view-highscores");
+viewHighscoresButton.addEventListener("click", function () {
+    window.location.href = "highscores.html";
+});

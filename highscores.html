@@ -1,0 +1,17 @@
+<label for="initials">Enter Your Initials: </label>
+<input type="text" id="initials" />
+<button id="saveScore">Save Score</button>
+
+<h2>High Scores</h2>
+<ul id="highScoresList"></ul>
+
+<script>
+    var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+var highScoresList = document.getElementById("highScoresList");
+
+highScores.forEach(function (scoreData) {
+  var listItem = document.createElement("li");
+  listItem.textContent = scoreData.initials + " - " + scoreData.score;
+  highScoresList.appendChild(listItem);
+});
+</script>
