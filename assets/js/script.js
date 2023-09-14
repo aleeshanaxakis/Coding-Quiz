@@ -60,26 +60,9 @@ startQuiz.addEventListener("click", function () {
             // Stop the timer when it reaches 0
             clearInterval(timerInterval);
             timerDisplay.textContent = "00:00";
+            // Add code here to handle quiz completion when time is up
+            // For example, display a message or navigate to another page.
             alert("Time's up!");
-        
-            var userInitials = document.getElementById("initials").ariaValueMax;
-            var userScore = secondsLeft;
-
-            var userData = {
-                initials: userInitials,
-                score: userScore
-            };
-
-            var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-            highScores.push(userData);
-            highScores.sort(function (a,b) {
-                return b.score - a.score;
-            });
-
-            highScores = highScores.slice(0, 10);
-
-            localStorage.setItem("highScores", JSON.stringify(highScores));
-
         } else {
             // Update the timer display
             updateTimerDisplay();
@@ -89,6 +72,8 @@ startQuiz.addEventListener("click", function () {
 // Display the first question when the user clicks Start Quiz
 displayQuestion();
 });
+
+var highscoresButton = document.querySelector(".view-highscores");
 
 // Check if the answer is correct
 answerButtons.forEach(function (button, index) {
@@ -106,7 +91,7 @@ answerButtons.forEach(function (button, index) {
             } else {
                 clearInterval(timerInterval);
                 timerDisplay.textContent = "00:00";
-                alert ("Congratulations! You've completed the quiz.");
+                document.getElementById("initials-input").style.display = "block";
             }
         } else {
             secondsLeft -= 10;
@@ -116,6 +101,22 @@ answerButtons.forEach(function (button, index) {
             updateTimerDisplay();
         }
     });
+});
+
+// Event listener for the "Save" button
+document.getElementById("save-initials").addEventListener("click", function () {
+    var initials = document.getElementById("initials").value;
+
+    if (initials) {
+        // Save the initials and score
+        var score = secondsLeft;
+        highscores.push({ initials, score });
+
+        // Redirect to the highscores page
+        window.location.href = "highscores.html";
+    } else {
+        alert("Please enter your initials before saving.");
+    }
 });
 
 function updateTimerDisplay() {
@@ -133,8 +134,4 @@ function displayQuestion() {
     }
 }
 
-// Allow user to navigate to high score page
-var viewHighscoresButton = document.querySelector(".view-highscores");
-viewHighscoresButton.addEventListener("click", function () {
-    window.location.href = "highscores.html";
-});
+
