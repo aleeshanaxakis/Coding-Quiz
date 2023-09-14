@@ -37,6 +37,16 @@ var questions = [
     }
 ];
 
+// How to handle quiz completion
+function quizCompletion() {
+    clearInterval(timerInterval);
+    if (secondsLeft < 0) {
+        secondsLeft = 0;
+        updateTimerDisplay();
+    }
+    document.getElementById("initials-input").style.display = "block";
+}
+
 // Start the timer countdown when the user clicks Start Quiz
 function updateTimerDisplay() {
     var minutes = Math.floor(secondsLeft / 60);
@@ -56,13 +66,8 @@ startQuiz.addEventListener("click", function () {
     timerInterval = setInterval(function () {
         secondsLeft--;
 
-        if (secondsLeft <= 0) {
-            // Stop the timer when it reaches 0
-            clearInterval(timerInterval);
-            timerDisplay.textContent = "00:00";
-            // Add code here to handle quiz completion when time is up
-            // For example, display a message or navigate to another page.
-            alert("Time's up!");
+        if (secondsLeft <= 0 || currentQuestionIndex >= questions.length ) {
+            quizCompletion();
         } else {
             // Update the timer display
             updateTimerDisplay();
@@ -89,9 +94,7 @@ answerButtons.forEach(function (button, index) {
             if (currentQuestionIndex < questions.length) {
                 displayQuestion();
             } else {
-                clearInterval(timerInterval);
-                timerDisplay.textContent = "00:00";
-                document.getElementById("initials-input").style.display = "block";
+                quizCompletion();
             }
         } else {
             secondsLeft -= 10;
