@@ -113,7 +113,23 @@ document.getElementById("save-initials").addEventListener("click", function () {
     if (initials) {
         // Save the initials and score
         var score = secondsLeft;
-        highscores.push({ initials, score });
+        
+        // Create an object to store the initials and score
+        var scoreData = { initials, score };
+
+        // Retrieve the existing highScores from local storage
+        var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+        // Add the new scoreData object to the highScores array
+        highScores.push(scoreData);
+
+        // Sort the highScores array by score in descending order
+        highScores.sort(function (a, b) {
+            return b.score - a.score;
+        });
+
+        // Store the updated highScores array in local storage
+        localStorage.setItem("highScores", JSON.stringify(highScores));
 
         // Redirect to the highscores page
         window.location.href = "highscores.html";
