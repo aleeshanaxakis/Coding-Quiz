@@ -26,7 +26,7 @@ WHEN the game is over
 THEN I can save my initials and my score
 
 ## Installation
-The timed coding quiz can be accessed via the URL:
+The timed coding quiz can be accessed via the URL: https://aleeshanaxakis.github.io/Coding-Quiz/
 
 ## Usage
 Employers may use coding quizzes as part of the interview process when hiring web developers. Alternatively, students learning to code may use coding quizzes to practice their skills and put them to the test.
